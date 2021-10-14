@@ -1,59 +1,54 @@
-# laravel-nextcloud
+# Laravel Nextcloud Filesystem Driver
 
-Based on https://github.com/pascalbaljetmedia/laravel-webdav
+Based on [pbmedia/laravel-webdav](https://github.com/pascalbaljetmedia/laravel-webdav), fork of [jedlikowski/laravel-nextcloud](https://github.com/jedlikowski/laravel-nextcloud).
 
-## Install
-
-Via Composer
+## Installation
 
 ```bash
-$ composer require jedlikowski/laravel-nextcloud
+composer require nextgen-tech/laravel-nextcloud
 ```
 
 ## Usage
 
 Register the service provider in your app.php config file:
 
+> You can skip this part if you are using Laravel 5.5 or higher.
+
 ```php
 // config/app.php
 
 'providers' => [
     ...
-    Jedlikowski\NextCloudStorage\NextCloudServiceProvider::class
+    NGT\Laravel\NextcloudDriver\NextcloudServiceProvider::class
     ...
 ];
 ```
 
-Create a NextCloud filesystem disk:
+Create a Nextcloud filesystem disk:
 
 ```php
 // config/filesystems.php
 
 'disks' => [
-	...
-	'nextcloud' => [
-	    'driver'     => 'nextcloud',
-	    'baseUri'    => 'https://mywebdavstorage.com',
-	    'userName'   => 'johndoe',
-	    'password'   => 'secret',
-	    'pathPrefix' => '', // provide a subfolder name if your NextCloud instance isn't running directly on a domain, e.g. https://example.com/drive
-	],
-	...
+    ...
+    'nextcloud' => [
+        'driver'   => 'nextcloud',
+        'url'      => env('NEXTCLOUD_URL', ''),
+        'user'     => env('NEXTCLOUD_USER', ''),
+        'password' => env('NEXTCLOUD_PASSWORD'),
+        'proxy'    => env('NEXTCLOUD_PROXY'),
+        'encoding' => env('NEXTCLOUD_ENCODING'),
+    ],
+    ...
 ];
 ```
 
-## Security
+Add variables to .env file:
 
-If you discover any security related issues, please email jakub.jedlikowski@gmail.com instead of using the issue tracker.
-
-## Credits
-
--   [Jakub Jedlikowski][link-author]
--   [Pascal Baljet][link-author-2]
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-[link-author]: https://github.com/jedlikowski
-[link-author-2]: https://github.com/pascalbaljet
+```
+NEXTCLOUD_URL=
+NEXTCLOUD_USER=
+NEXTCLOUD_PASSWORD=
+NEXTCLOUD_PROXY=
+NEXTCLOUD_ENCODING=
+```

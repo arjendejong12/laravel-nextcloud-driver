@@ -1,64 +1,66 @@
 <?php
 
-namespace Jedlikowski\NextCloudStorage\Tests;
+declare(strict_types=1);
+
+namespace NGT\Laravel\NextcloudDriver\Tests;
 
 use Illuminate\Support\Facades\Storage;
-use Jedlikowski\NextCloudStorage\NextCloudAdapter;
-use Jedlikowski\NextCloudStorage\NextCloudServiceProvider;
+use NGT\Laravel\NextcloudDriver\NextcloudServiceProvider;
+use NGT\Laravel\NextcloudDriver\NextcloudWebDAVAdapter;
 
 class ServiceProviderTest extends \Orchestra\Testbench\TestCase
 {
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
-        return [NextCloudServiceProvider::class];
+        return [NextcloudServiceProvider::class];
     }
 
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set('filesystems.disks.nextcloud', [
-            'driver' => 'nextcloud',
-            'baseUri' => 'https://mywebdavstorage.com',
-            'userName' => 'jedlikowski',
+            'driver'   => 'nextcloud',
+            'url'      => 'https://mywebdavstorage.com',
+            'user'     => 'nextgen-tech',
             'password' => 'supersecretpassword',
         ]);
     }
 
     /** @test */
-    public function it_registers_a_webdav_driver()
+    public function it_registers_a_webdav_driver(): void
     {
         $filesystem = Storage::disk('nextcloud');
-        $driver = $filesystem->getDriver();
-        $adapter = $driver->getAdapter();
+        $driver     = $filesystem->getDriver();
+        $adapter    = $driver->getAdapter();
 
-        $this->assertInstanceOf(NextCloudAdapter::class, $adapter);
+        $this->assertInstanceOf(NextcloudWebDAVAdapter::class, $adapter);
     }
 
     /** @test */
-    public function it_can_have_an_optional_path_prefix()
+    public function it_can_have_an_optional_path_prefix(): void
     {
         $this->app['config']->set('filesystems.disks.nextcloud.pathPrefix', 'prefix');
-        $userName = $this->app['config']->get('filesystems.disks.nextcloud.userName');
+        $user = $this->app['config']->get('filesystems.disks.nextcloud.user');
 
         $filesystem = Storage::disk('nextcloud');
-        $driver = $filesystem->getDriver();
-        $adapter = $driver->getAdapter();
+        $driver     = $filesystem->getDriver();
+        $adapter    = $driver->getAdapter();
 
-        $this->assertInstanceOf(NextCloudAdapter::class, $adapter);
-        $this->assertEquals('prefix/remote.php/dav/files/' . $userName . '/', $adapter->getPathPrefix());
+        $this->assertInstanceOf(NextcloudWebDAVAdapter::class, $adapter);
+        $this->assertEquals('prefix/remote.php/dav/files/' . $user . '/', $adapter->getPathPrefix());
     }
 
     /** @test */
-    public function it_can_generate_direct_url_to_file()
+    public function it_can_generate_direct_url_to_file(): void
     {
-        $userName = $this->app['config']->get('filesystems.disks.nextcloud.userName');
+        $user       = $this->app['config']->get('filesystems.disks.nextcloud.user');
         $filesystem = Storage::disk('nextcloud');
-        $driver = $filesystem->getDriver();
-        $adapter = $driver->getAdapter();
+        $driver     = $filesystem->getDriver();
+        $adapter    = $driver->getAdapter();
 
-        $filename = 'backup-2019-09-25-21-00-00.zip';
-        $targetUrl = 'https://jedlikowski:supersecretpassword@mywebdavstorage.com/remote.php/dav/files/' . $userName . '/' . $filename;
+        $filename  = 'backup-2019-09-25-21-00-00.zip';
+        $targetUrl = 'https://mywebdavstorage.com/remote.php/dav/files/' . $user . '/' . $filename;
 
-        $this->assertInstanceOf(NextCloudAdapter::class, $adapter);
+        $this->assertInstanceOf(NextcloudWebDAVAdapter::class, $adapter);
         $this->assertEquals($targetUrl, $filesystem->url($filename));
     }
 }
