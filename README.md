@@ -5,24 +5,10 @@ Based on [pbmedia/laravel-webdav](https://github.com/pascalbaljetmedia/laravel-w
 ## Installation
 
 ```bash
-composer require nextgen-tech/laravel-nextcloud
+composer require nextgen-tech/laravel-nextcloud-driver
 ```
 
 ## Usage
-
-Register the service provider in your app.php config file:
-
-> You can skip this part if you are using Laravel 5.5 or higher.
-
-```php
-// config/app.php
-
-'providers' => [
-    ...
-    NGT\Laravel\NextcloudDriver\NextcloudServiceProvider::class
-    ...
-];
-```
 
 Create a Nextcloud filesystem disk:
 
