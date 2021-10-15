@@ -16,8 +16,11 @@
     "require": {
         "php": "^7.4|8.0.*",
         "illuminate/filesystem": "^6.0|^7.0|^8.0",
+        "illuminate/support": "^6.0|^7.0|^8.0",
+        "league/flysystem": "~1.0",
         "league/flysystem-webdav": "^1.0.9",
-        "jakeasmith/http_build_url": "^1"
+        "sabre/dav": "~3.1|~4.0",
+        "sabre/http": "^5.0.5"
     },
     "require-dev": {
         "orchestra/testbench": "^3.0",
