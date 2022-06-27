@@ -1,5 +1,5 @@
 {
-    "name": "nextgen-tech/laravel-nextcloud-driver",
+    "name": "arjendejong12/laravel-nextcloud-driver",
     "type": "library",
     "description": "Laravel Nextcloud Filesystem Driver",
     "license": "MIT",
@@ -11,12 +11,16 @@
         {
             "name": "Krzysztof Granania",
             "role": "Developer"
+        },
+        {
+            "name": "Arjen de Jong",
+            "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.4|8.0.*",
-        "illuminate/filesystem": "^6.0|^7.0|^8.0",
-        "illuminate/support": "^6.0|^7.0|^8.0",
+        "php": "^7.4|^8.0|^8.1",
+        "illuminate/filesystem": "^6.0|^7.0|^8.0|^9.0",
+        "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
         "league/flysystem": "~1.0",
         "league/flysystem-webdav": "^1.0.9",
         "sabre/dav": "~3.1|~4.0",
@@ -24,7 +28,7 @@
     },
     "require-dev": {
         "orchestra/testbench": "^3.0",
-        "phpunit/phpunit": "~5.0|~6.0|~7.0|~8.0",
+        "phpunit/phpunit": "~5.0|~6.0|~7.0|~8.0|~9.0",
         "phpstan/phpstan": "^0.12.99",
         "nunomaduro/larastan": "^0.7.13"
     },
