@@ -42,8 +42,9 @@ class NextcloudWebDAVAdapter extends WebDAVAdapter
      * @param Client $client
      * @param string $prefix
      */
-    public function __construct(NextcloudWebDAVClient $client, $prefix = null)
+    public function __construct(NextcloudWebDAVClient $client, $prefix = '')
     {
+        parent::__construct($client, $prefix);
         $this->client = $client;
         $this->prefixer = new PathPrefixer($prefix);
     }
