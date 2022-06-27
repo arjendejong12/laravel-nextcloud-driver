@@ -1,5 +1,5 @@
 {
-    "name": "arjendejong12/laravel-nextcloud-driver",
+    "name": "nextgen-tech/laravel-nextcloud-driver",
     "type": "library",
     "description": "Laravel Nextcloud Filesystem Driver",
     "license": "MIT",
