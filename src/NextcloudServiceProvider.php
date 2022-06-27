@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NGT\Laravel\NextcloudDriver;
 
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Filesystem;
@@ -37,7 +38,11 @@ class NextcloudServiceProvider extends ServiceProvider
 
             $adapter = new NextcloudWebDAVAdapter($client, $pathPrefix);
 
-            return new Filesystem($adapter);
+            return new FilesystemAdapter(
+                new Filesystem($adapter, $config),
+                $adapter,
+                $config
+            );
         });
     }
 }
