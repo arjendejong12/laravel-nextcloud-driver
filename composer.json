@@ -22,7 +22,7 @@
         "illuminate/filesystem": "^9.0",
         "illuminate/support": "^9.0",
         "league/flysystem": "~3.0",
-        "league/flysystem-webdav": "^1.0.10",
+        "league/flysystem-webdav": "~3.0",
         "sabre/dav": "~3.1|~4.0",
         "sabre/http": "^5.0.5"
     },
