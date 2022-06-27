@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NGT\Laravel\NextcloudDriver;
 
+use League\Flysystem\PathPrefixer;
 use League\Flysystem\WebDAV\WebDAVAdapter;
 
 class NextcloudWebDAVAdapter extends WebDAVAdapter
@@ -36,16 +37,40 @@ class NextcloudWebDAVAdapter extends WebDAVAdapter
     ];
 
     /**
+     * Constructor.
+     *
+     * @param Client $client
+     * @param string $prefix
+     */
+    public function __construct(NextcloudWebDAVClient $client, $prefix = null)
+    {
+        $this->client = $client;
+        $this->prefixer = new PathPrefixer($prefix);
+    }
+
+    /**
      * Get the remote URL for the file at the given path.
      *
-     * @param   string  $path
+     * @param  string  $path
      *
-     * @return  string
+     * @return string
      */
     public function getUrl(string $path): string
     {
         return $this->client->getAbsoluteUrl(
             $this->applyPathPrefix($this->encodePath($path))
         );
+    }
+
+    /**
+     * Apply the path prefix.
+     *
+     * @param  string $path
+     *
+     * @return string prefixed path
+     */
+    protected function applyPathPrefix($path): string
+    {
+        return '/' . trim($this->prefixer->prefixPath($path), '/');
     }
 }
